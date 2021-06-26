@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour {
 	[Header("Enemy Spawn Management")]
+    //Enemy spawn every 10 sec at each spawnpoints
 	public float respawnDuration = 5.0f;
 	public List<GameObject> spawnPoints = new List<GameObject>();
 	public GameObject target;
@@ -15,9 +16,11 @@ public class EnemySpawner : MonoBehaviour {
 	public float startDamage = 15f;
 	public int startEXP = 3;
 	public int startFund = 5;
-	public float upgradeDuration = 60f;	// Increase all enemy stats every 30 seconds
 
-	private float upgradeTimer;
+	// Increase all enemy stats every 30 seconds
+	public float upgradeDuration = 60f;
+	//Every 30 secs enemy stats increase and upgardeTimer reset to 0
+    private float upgradeTimer;
 	[SerializeField]
 	private float currentHealth;
 	[SerializeField]
@@ -31,7 +34,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	private NetworkManager networkManager;
 	
-	
+	//Every 10 secs enemy spawn and SpawnTmer reset to 0
 	private float spawnTimer;
 
 	private PrefabManager prefabManager;
@@ -89,6 +92,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	void SpawnEnemy() {
 		if(spawnTimer < respawnDuration) return;
+		print("ENEMY Spawn");
 
 		foreach(GameObject spawnPoint in spawnPoints) {
 			GameObject zombie = enemies[0];
