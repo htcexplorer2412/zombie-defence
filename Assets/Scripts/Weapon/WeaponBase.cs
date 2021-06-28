@@ -248,7 +248,7 @@ public class WeaponBase : MonoBehaviour {
 		GameObject gunSmokeEffect = Instantiate(gunSmoke, muzzlePoint.position, muzzlePoint.rotation);
 		Destroy(gunSmokeEffect, 5f);
 
-		GiveRecoil();
+	//	GiveRecoil();
 
 		muzzleflash.Play();
 		soundManager.Play(gunFireSound);
