@@ -17,7 +17,7 @@ public class StartupText : MonoBehaviour {
 		globalSoundManager.Play(prepare);
 
 		text = GetComponent<Text>();
-		remainSeconds = 10;
+		remainSeconds = 3;
 
 		StartCoroutine(StartAnimation());
 	}

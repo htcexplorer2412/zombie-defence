@@ -45,7 +45,8 @@ public class EnemySpawner : MonoBehaviour {
 		currentFund = startFund;
 
 		prefabManager = PrefabManager.GetInstance();
-		enemies.Add(prefabManager.GetPrefab("Zombie"));
+		//enemies.Add(prefabManager.GetPrefab("Zombie"));
+		enemies.Add(prefabManager.GetPrefab("YBot"));
 
 		networkManager = GameObject.Find("GameManager").GetComponent<NetworkManager>();
 	}
@@ -116,7 +117,7 @@ public class EnemySpawner : MonoBehaviour {
 
 		currentHealth += 5;
 
-		if(currentMoveSpeed < 4f) {
+		if(currentMoveSpeed < 1f) {
 			currentMoveSpeed += 0.2f;
 		}
 		if(currentDamage < 51f) {

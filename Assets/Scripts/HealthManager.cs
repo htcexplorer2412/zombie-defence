@@ -42,6 +42,7 @@ public class HealthManager : MonoBehaviour {
 				
 				if(animator) {
 					animator.SetTrigger("Dead");
+					
 				}
 				
 				if(removeColliderOnDeath) {
