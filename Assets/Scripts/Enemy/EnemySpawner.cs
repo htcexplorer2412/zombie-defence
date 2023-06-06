@@ -93,17 +93,24 @@ public class EnemySpawner : MonoBehaviour {
 
 		foreach(GameObject spawnPoint in spawnPoints) {
 			GameObject zombie = enemies[0];
+		/*	zombie.GetComponentIn<Chasing>().damage = currentDamage;
 			zombie.GetComponent<Chasing>().target = target;
-			zombie.GetComponent<Chasing>().damage = currentDamage;
 			zombie.GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
 			zombie.GetComponent<HealthManager>().SetHealth(currentHealth);
 			zombie.GetComponent<KillReward>().exp = currentEXP;
-			zombie.GetComponent<KillReward>().fund = currentFund;
+			zombie.GetComponent<KillReward>().fund = currentFund;*/
+
+			zombie.GetComponentInChildren<Chasing>().damage = currentDamage;
+			zombie.GetComponentInChildren<Chasing>().target = target;
+			zombie.GetComponentInChildren<NavMeshAgent>().speed = currentMoveSpeed;
+			zombie.GetComponentInChildren<HealthManager>().SetHealth(currentHealth);
+			zombie.GetComponentInChildren<KillReward>().exp = currentEXP;
+			zombie.GetComponentInChildren<KillReward>().fund = currentFund;
 
 			// Boost rotating speed
 			float rotateSpeed = 120f + currentMoveSpeed;
 			rotateSpeed = Mathf.Max(rotateSpeed, 200f);	// Max 200f
-			zombie.GetComponent<NavMeshAgent>().angularSpeed = rotateSpeed;
+			zombie.GetComponentInChildren<NavMeshAgent>().angularSpeed = rotateSpeed;
 
 			// PhotonNetwork.Instantiate("Zombie", spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
 			Instantiate(zombie, spawnPoint.transform.position, spawnPoint.transform.rotation);
