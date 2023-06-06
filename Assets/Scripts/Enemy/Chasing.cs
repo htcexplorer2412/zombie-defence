@@ -7,6 +7,8 @@ public class Chasing : MonoBehaviour {
 	NetworkManager networkManager;
 	Animator animator;
 	HealthManager healthManager;
+	//public GameObject gameObject;
+	[SerializeField]
 	NavMeshAgent agent;
 	AudioSource audioSource;
 	public GameObject target;
@@ -84,9 +86,10 @@ public class Chasing : MonoBehaviour {
 			
 			audioSource.PlayOneShot(deathSound);
 
-			Destroy(agent);
+			//Destroy(this.gameObject);
+			Destroy(gameObject);
 
-			StartCoroutine(RemoveGameObject());
+			//StartCoroutine(RemoveGameObject());
 			return;
 		}
 	}
@@ -154,7 +157,7 @@ public class Chasing : MonoBehaviour {
 	}
 
 	IEnumerator RemoveGameObject() {
-		yield return new WaitForSeconds(5f);
+		yield return new WaitForSeconds(0f);
 		// PhotonNetwork.Destroy(gameObject);
 		Destroy(gameObject);
 	}
