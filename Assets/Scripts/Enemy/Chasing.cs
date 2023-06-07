@@ -20,9 +20,13 @@ public class Chasing : MonoBehaviour {
 
 	public AudioClip attackSound;
 	public AudioClip deathSound;
+	[SerializeField]
+	EnemyPatrol enemyPatrol;
+
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		animator = GetComponent<Animator>();
 		healthManager = GetComponent<HealthManager>();
 		agent = GetComponent<NavMeshAgent>();
@@ -87,9 +91,10 @@ public class Chasing : MonoBehaviour {
 			audioSource.PlayOneShot(deathSound);
 
 			//Destroy(this.gameObject);
-			Destroy(gameObject);
+		//	enemyPatrol.SetIsDead(true);
+			//Destroy(gameObject);
 
-			//StartCoroutine(RemoveGameObject());
+			StartCoroutine(RemoveGameObject());
 			return;
 		}
 	}
@@ -157,8 +162,10 @@ public class Chasing : MonoBehaviour {
 	}
 
 	IEnumerator RemoveGameObject() {
-		yield return new WaitForSeconds(0f);
+		yield return new WaitForSeconds(0.5f);
 		// PhotonNetwork.Destroy(gameObject);
+		
 		Destroy(gameObject);
+		yield return null;
 	}
 }

@@ -7,7 +7,8 @@ public class EnemyPatrol : EnemyState
 {
     bool CanSee;
     NavMeshAgent navMeshAgent;
-    public GameObject gameObject;
+    public GameObject enemyObject;
+    FieldOfView fieldOfView;
     [SerializeField]
     Transform _destination;
     List<Transform> playerInfo = new List<Transform>();
@@ -19,36 +20,47 @@ public class EnemyPatrol : EnemyState
     private IEnumerator coroutine;
     int lastVisited;
 
+
+    private bool isDead = false;
+
+    public void SetIsDead(bool value)
+    {
+        isDead = value;
+    }
+
+    public void stopFollowingPath(IEnumerator coroutine)
+    {
+        StopCoroutine(coroutine);
+    }
     public override EnemyState RunCurrentState()
     {
         
-       // Debug.Log("Patrol activated");
+        
         Vector3[] wayPoints = new Vector3[_destination.childCount];
         for (int i = 0; i < wayPoints.Length; i++)
         {
             wayPoints [i] =_destination.GetChild (i).position;
-			wayPoints [i] = new Vector3 (wayPoints[i]. x, gameObject.transform.position.y, wayPoints[i]. z);
+			wayPoints [i] = new Vector3 (wayPoints[i]. x, enemyObject.transform.position.y, wayPoints[i]. z);
         }
         coroutine = FollowPath(wayPoints,lastVisited);
-      //  render = gameObject.GetComponent<Renderer>();
+        if(isDead)
+        {
+            stopFollowingPath(FollowPath(wayPoints,lastVisited));
+        }
+
         Debug.Log(lastVisited);
     
 
-       if(gameObject.GetComponent<FieldOfView>().visiblePlayer.Count != 0)
+       if(enemyObject.GetComponent<FieldOfView>().visiblePlayer.Count != 0)
         {
             CanSee = true;
-            StopCoroutine(coroutine);
-//            Animation.SetBool("isWalking", true);
-            
-    //        render.material.color = Color.white;
-            //gameObject.GetComponent<Material>
+            StopCoroutine(FollowPath(wayPoints,lastVisited));
             return enemyHunting;
         }
         else
         {
-     //       render.material.color = Color.green;
             CanSee = false;
-            StartCoroutine (coroutine);
+            StartCoroutine (FollowPath(wayPoints,lastVisited));
             return this;
         }
     }
@@ -56,25 +68,38 @@ public class EnemyPatrol : EnemyState
     IEnumerator FollowPath(Vector3[] wayPoints, int _lastVisited)
     {
        int targetWaypointIndex = _lastVisited;
-        navMeshAgent = gameObject.GetComponentInChildren<NavMeshAgent>();
+        navMeshAgent = enemyObject.GetComponentInChildren<NavMeshAgent>();
         Vector3 targetVector = wayPoints[targetWaypointIndex];
         
         while(!CanSee)
         {
             lastVisited = targetWaypointIndex;
-            navMeshAgent.SetDestination(targetVector);
+            if(!isDead)
+            {
+                navMeshAgent.SetDestination(targetVector);
+            }
             
-            if (Vector3.Distance(gameObject.transform.position, targetVector) < 0.5f)
+            if (Vector3.Distance(enemyObject.transform.position, targetVector) < 0.5f)
             {
             
                 targetWaypointIndex = (targetWaypointIndex + 1) % wayPoints.Length;
                 targetVector = wayPoints[targetWaypointIndex];
-              //  yield return new WaitForSeconds(waitTime);
 
             }
             yield return null;
         }
 
+    }
+
+    private void OnDestroy()
+    {
+            StopCoroutine(coroutine);
+        
+
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.enabled = false;
+        }
     }
 
 

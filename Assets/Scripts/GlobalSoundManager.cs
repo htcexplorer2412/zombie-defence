@@ -18,7 +18,7 @@ public class GlobalSoundManager : MonoBehaviour {
 	}
 
 	// For support multiplayer, it needs to distinguish between players
-	public static GlobalSoundManager Get() {
+	/*public static GlobalSoundManager Get() {
 		return GameObject.Find("GlobalSoundManager").GetComponent<GlobalSoundManager>();
-	}
+	}*/
 }

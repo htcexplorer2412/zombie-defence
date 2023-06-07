@@ -13,13 +13,13 @@ public class StartupText : MonoBehaviour {
 	public AudioClip beep;
 
 	void Start() {
-		globalSoundManager = GlobalSoundManager.Get();
-		globalSoundManager.Play(prepare);
+		//globalSoundManager = GlobalSoundManager.Get();
+		//globalSoundManager.Play(prepare);
 
 		text = GetComponent<Text>();
 		remainSeconds = 3;
 
-		StartCoroutine(StartAnimation());
+		//StartCoroutine(StartAnimation());
 	}
 
 	IEnumerator StartAnimation() {
